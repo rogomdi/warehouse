@@ -25,7 +25,7 @@ The project used the followig technologies:
 Continuous integration and continuous deployment (CI/CD)
 ---
 The steps defined in CI workflow are the following:
-- Build: This step compiles all the microservices. This step runs on every pipeline
+- Build: This step compiles the code. This step runs on every pipeline
 - Test: The mission of this step is to run all tests in the project
     - CI on every push: This pipeline only runs unit tests on this step.
     - CI on PRs and main branch: It runs unit and integration tests.
@@ -38,7 +38,7 @@ Also it is integrated on github as required to pass the Build and Test checks on
 Security
 ---
 Because of the lack of time, these coding test have not any security implemented, in a production environment these APIs should have a security layer using JWT tokens or the OAuth2 standard.
-Also, I would suggest having a gateway on top of these services, so you only expose these APIs through it.
+Also, I would suggest having a gateway on top of these this service, so you only expose these APIs through it.
 
 API documentation
 ---
