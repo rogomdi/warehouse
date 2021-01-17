@@ -1,0 +1,89 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id "maven-publish"
+}
+
+group = 'com.ikea'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+bootRun {
+	systemProperties = System.properties
+}
+
+dependencies {
+	def jmapperVersion = '1.6.1.CR2'
+	def springdocVersion = '1.5.2'
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: springdocVersion
+	implementation group: 'com.googlecode.jmapper-framework', name: 'jmapper-core', version: jmapperVersion
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+}
+
+jar {
+	enabled = true
+}
+
+bootJar {
+	archiveClassifier = 'executable'
+}
+
+publishing {
+	repositories {
+		maven {
+			name = "GitHubPackages"
+			url = "https://maven.pkg.github.com/" + System.getenv("GITHUB_REPOSITORY")
+			credentials {
+				username = System.getenv("GITHUB_ACTOR")
+				password = System.getenv("GITHUB_TOKEN")
+			}
+		}
+	}
+	publications {
+		gpr(MavenPublication) {
+			from(components.java)
+		}
+	}
+}
+
+
+task unitTest( type: Test ) {
+	maxHeapSize = "1g"
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed", "standardError"
+	}
+	exclude '**/*IntegrationTest*'
+}
+
+task intTest( type: Test ) {
+	maxHeapSize = "1g"
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed", "standardError"
+	}
+	include '**/*IntegrationTest*'
+}
+
+test {
+	onlyIf { !project.hasProperty("skipTests") }
+	useJUnitPlatform()
+}

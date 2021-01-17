@@ -1,0 +1,11 @@
+springdoc:
+  api-docs:
+    path: /docs
+  swagger-ui:
+    path: /swagger
+
+
+spring:
+  data:
+    mongodb:
+      database: warehouse
