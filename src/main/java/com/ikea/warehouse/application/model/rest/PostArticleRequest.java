@@ -8,9 +8,13 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Dto to model the upload of articles through the API
+ *
+ * @author robertogomez
+ */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class PostArticleRequest {
 
     @JsonProperty("inventory")
@@ -18,7 +22,6 @@ public class PostArticleRequest {
 
     @Data
     @NoArgsConstructor
-    @AllArgsConstructor
     public static class ArticleRequest {
 
         @JsonProperty("art_id")

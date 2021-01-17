@@ -24,10 +24,10 @@ class ApplicationProductServiceTest {
     private final ProductService productService = mock(ProductService.class);
     private final ApplicationProductService applicationProductService = new ApplicationProductService(productService);
     private static final Article TEST_ARTICLE = buildArticle("test_article", 2);
-    private static final Composition TEST_COMPOSITION = new Composition(TEST_ARTICLE,2);
+    private static final Composition TEST_COMPOSITION = buildComposition(TEST_ARTICLE,2);
     private static final Product TEST_PRODUCT = buildProduct("test_product", Collections.singletonList(TEST_COMPOSITION), 20);
     private static final Article TEST_ARTICLE_NO_STOCK = buildArticle("test_article", 0);
-    private static final Composition TEST_COMPOSITION_NO_STOCK = new Composition(TEST_ARTICLE_NO_STOCK,2);
+    private static final Composition TEST_COMPOSITION_NO_STOCK = buildComposition(TEST_ARTICLE_NO_STOCK,2);
     private static final Product TEST_PRODUCT_NO_STOCK = buildProduct("test_product", Collections.singletonList(TEST_COMPOSITION_NO_STOCK), 20);
 
     private static Article buildArticle(String name, long stock){
@@ -35,6 +35,13 @@ class ApplicationProductServiceTest {
         article.setStock(stock);
         article.setName(name);
         return article;
+    }
+
+    private static Composition buildComposition(Article article, int quantity) {
+        Composition composition = new Composition();
+        composition.setQuantity(quantity);
+        composition.setArticle(article);
+        return composition;
     }
 
     private static Product buildProduct(String name, List<Composition> compositions, double price){
@@ -67,5 +74,13 @@ class ApplicationProductServiceTest {
         when(productService.sell(TEST_PRODUCT_NO_STOCK.getId())).thenThrow(NoStockException.class);
         UUID id = TEST_PRODUCT_NO_STOCK.getId();
         assertThrows(WarehouseException.class, () -> applicationProductService.sell(id), "Should throw exception if selling product without stock");
+    }
+
+    @Test
+    void sellUnexistingProduct() throws NoStockException, NotFoundException {
+        UUID unexistingProduct = UUID.randomUUID();
+        when(productService.sell(TEST_PRODUCT_NO_STOCK.getId())).thenThrow(NoStockException.class);
+        when(productService.sell(unexistingProduct)).thenThrow(NotFoundException.class);
+        assertThrows(WarehouseException.class, () -> applicationProductService.sell(unexistingProduct), "Should throw exception if product doesn't exist");
     }
 }

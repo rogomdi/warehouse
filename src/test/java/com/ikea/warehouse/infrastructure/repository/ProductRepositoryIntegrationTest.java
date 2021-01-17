@@ -22,13 +22,13 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 @DataMongoTest
 @ExtendWith(SpringExtension.class)
 @Import({ProductRepositoryImpl.class, ArticleRepositoryImpl.class})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 class ProductRepositoryIntegrationTest {
 
     @Autowired private ProductRepository productRepository;
     @Autowired private ArticleRepository articleRepository;
     private static final Article TEST_ARTICLE = buildArticle(1, "test_article", 2);
-    private static final Composition TEST_COMPOSITION = new Composition(TEST_ARTICLE, 1);
+    private static final Composition TEST_COMPOSITION = buildComposition(TEST_ARTICLE, 1);
     private static final Product TEST_PRODUCT = buildProduct("test_product", Collections.singletonList(TEST_COMPOSITION), 20);
 
     private static Article buildArticle(long id, String name, long stock) {
@@ -37,6 +37,13 @@ class ProductRepositoryIntegrationTest {
         article.setStock(stock);
         article.setName(name);
         return article;
+    }
+
+    private static Composition buildComposition(Article article, int quantity) {
+        Composition composition = new Composition();
+        composition.setQuantity(quantity);
+        composition.setArticle(article);
+        return composition;
     }
 
     private static Product buildProduct(String name, List<Composition> compositions, double price) {

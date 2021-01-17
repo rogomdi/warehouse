@@ -11,6 +11,12 @@ import org.springframework.data.mongodb.core.mapping.FieldType;
 import java.util.List;
 import java.util.UUID;
 
+
+/**
+ * Product entity that acts as the MongoDB Dto of the {@link com.ikea.warehouse.domain.model.Product} domain entity
+ *
+ * @author robertogomez
+ */
 @Data
 @NoArgsConstructor
 @Document(collection = "product")
@@ -26,7 +32,7 @@ public class ProductEntity {
     @JMap
     private double price;
 
-    @JMap("composition")
+    @JMap
     @Field(targetType = FieldType.ARRAY)
     private List<CompositionEntity> composition;
 

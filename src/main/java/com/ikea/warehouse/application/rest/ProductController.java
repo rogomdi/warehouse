@@ -1,5 +1,6 @@
 package com.ikea.warehouse.application.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ikea.warehouse.application.exception.ApplicationError;
 import com.ikea.warehouse.application.exception.WarehouseException;
 import com.ikea.warehouse.application.model.rest.PostProductRequest;
@@ -13,10 +14,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Controller to manage the products
+ *
+ * @author robertogomez
+ */
 @RestController
 @RequestMapping("/api/product")
 @RequiredArgsConstructor
@@ -47,5 +55,15 @@ public class ProductController {
     @PostMapping
     public List<UUID> store(@RequestBody PostProductRequest postProductRequest) {
         return productService.store(restToDtoMapper.productDtoMapper(postProductRequest));
+    }
+
+    @Operation(summary = "Store products by a JSON file")
+    @PostMapping(value = "/bulk", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public List<UUID> storeFile(@RequestPart("file") MultipartFile file) {
+        try {
+            return productService.store(restToDtoMapper.productDtoMapper(new ObjectMapper().readValue(file.getBytes(), PostProductRequest.class)));
+        } catch (IOException e) {
+            throw new WarehouseException(ApplicationError.INVALID_OPERATION_INCORRECT_FILE_TYPE, e);
+        }
     }
 }

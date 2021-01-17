@@ -48,6 +48,13 @@ class DomainArticleServiceTest {
     }
 
     @Test
+    void reduceStock(){
+        when(articleRepository.save(any())).then(returnsFirstArg());
+        Article article = articleService.reduceStock(TEST_ARTICLE,1);
+        assertEquals(1, article.getStock());
+    }
+
+    @Test
     void save(){
         when(articleRepository.save(any())).then(returnsFirstArg());
         Article article = articleService.save(TEST_ARTICLE);

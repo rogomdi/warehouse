@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 @DataMongoTest
 @ExtendWith(SpringExtension.class)
 @Import(ArticleRepositoryImpl.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 class ArticleRepositoryIntegrationTest {
 
     @Autowired private ArticleRepository articleRepository;

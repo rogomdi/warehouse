@@ -13,7 +13,8 @@ import lombok.Getter;
 public enum ApplicationError {
 
     INVALID_OPERATION(1001, "Invalid operation"),
-    INVALID_OPERATION_NOT_FOUND(1002, "Invalid operation"),
+    INVALID_OPERATION_NOT_FOUND(1002, "Item not found"),
+    INVALID_OPERATION_INCORRECT_FILE_TYPE(1003, "File is not correct"),
     INTERNAL_ERROR(5001, "Internal error");
 
     /**

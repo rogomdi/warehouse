@@ -8,6 +8,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+/**
+ * Article entity that acts as the MongoDB Dto of the {@link com.ikea.warehouse.domain.model.Article} domain entity
+ *
+ * @author robertogomez
+ */
 @Data
 @NoArgsConstructor
 @Document(collection = "article")
@@ -23,5 +28,4 @@ public class ArticleEntity {
     @JMap
     private long stock;
 
-    private List<CompositionEntity> compositionEntity;
 }

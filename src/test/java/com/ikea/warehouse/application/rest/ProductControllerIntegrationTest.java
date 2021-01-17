@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -97,7 +98,7 @@ class ProductControllerIntegrationTest {
     void sellInvalidUuid() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.patch("/api/product")
                 .content("invalidUuid")
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.TEXT_PLAIN_VALUE)
                 .accept(MediaType.ALL))
                 .andExpect(status().is4xxClientError());
     }
@@ -119,5 +120,29 @@ class ProductControllerIntegrationTest {
         List<UUID> res = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<List<UUID>>() {
         });
         assertEquals(2, res.size(), "2 products should be stored");
+    }
+
+    @Test
+    void storeWithFile() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/article")
+                .content(Files.readString(new ClassPathResource("inventory.json").getFile().toPath()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful())
+                .andReturn();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.multipart("/api/product/bulk")
+                .file(new MockMultipartFile("file", new ClassPathResource("products.json").getInputStream())))
+                .andExpect(status().is2xxSuccessful())
+                .andReturn();
+        List<UUID> res = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<List<UUID>>() {
+        });
+        assertEquals(2, res.size(), "2 products should be stored");
+    }
+
+    @Test
+    void storeIncorrectFile() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/product/bulk")
+                .file(new MockMultipartFile("file", new ClassPathResource("test_file.txt").getInputStream())))
+                .andExpect(status().isBadRequest());
     }
 }

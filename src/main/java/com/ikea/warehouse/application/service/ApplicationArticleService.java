@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Application service to interact with articles in the domain layer
+ *
+ * @author robertogomez
+ */
 @Service
 @RequiredArgsConstructor
 public class ApplicationArticleService {
@@ -20,6 +25,12 @@ public class ApplicationArticleService {
     private final JMapper<ArticleDto, Article> articleDtoMapper = new JMapper<>(ArticleDto.class, Article.class);
     private final JMapper<Article, ArticleDto> articleMapper = new JMapper<>(Article.class, ArticleDto.class);
 
+    /**
+     * Get an article by its id
+     *
+     * @param id identifier of the article
+     * @return {@link ArticleDto}
+     */
     public ArticleDto getArticle(long id) {
         try {
             return this.articleDtoMapper.getDestination(articleService.getById(id));
@@ -28,6 +39,11 @@ public class ApplicationArticleService {
         }
     }
 
+    /**
+     * Stores a list of articles
+     *
+     * @param articleDtos list of articles to store
+     */
     public void store(List<ArticleDto> articleDtos) {
         articleDtos.forEach(articleDto -> articleService.save(articleMapper.getDestination(articleDto)));
     }

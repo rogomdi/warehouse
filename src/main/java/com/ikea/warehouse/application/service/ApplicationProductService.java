@@ -15,6 +15,11 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Application service to interact with products in the domain layer
+ *
+ * @author robertogomez
+ */
 @Service
 @RequiredArgsConstructor
 public class ApplicationProductService {
@@ -23,12 +28,25 @@ public class ApplicationProductService {
     private final JMapper<ProductDto, Product> productDtoMapper = new JMapper<>(ProductDto.class, Product.class);
     private final JMapper<Product, ProductDto> productMapper = new JMapper<>(Product.class, ProductDto.class);
 
+    /**
+     * Gets a list of products
+     *
+     * @param page Page of products to retrieve
+     * @param size Size of the page
+     * @return {@link List} of {@link ProductDto}
+     */
     public List<ProductDto> getProducts(int page, int size) {
         return productService.getAll(page, size).parallelStream()
                 .map(productDtoMapper::getDestination)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Sells a product
+     *
+     * @param id Identifier of the product to sell
+     * @exception WarehouseException if there is not enough stock or the product doesn't exist
+     */
     public void sell(UUID id) {
         try {
             productService.sell(id);
@@ -39,6 +57,11 @@ public class ApplicationProductService {
         }
     }
 
+    /**
+     * Stores a {@link List} of {@link ProductDto}
+     *
+     * @param productDtos {@link List} of {@link ProductDto} to store
+     */
     public List<UUID> store(List<ProductDto> productDtos) {
         return productDtos.stream().map(productDto -> productService.save(productMapper.getDestination(productDto))).map(Product::getId).collect(Collectors.toList());
     }

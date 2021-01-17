@@ -7,6 +7,7 @@ import com.ikea.warehouse.domain.model.Composition;
 import com.ikea.warehouse.domain.model.Product;
 import com.ikea.warehouse.domain.repository.ArticleRepository;
 import com.ikea.warehouse.domain.repository.ProductRepository;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.annotation.DirtiesContext;
@@ -20,20 +21,19 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class DomainProductServiceTest {
 
     private final ProductRepository productRepository = mock(ProductRepository.class);
-    private final ArticleRepository articleRepository = mock(ArticleRepository.class);
-    private final ProductService productService = new DomainProductService(productRepository, articleRepository);
+    private final ArticleService articleService = mock(ArticleService.class);
+    private final ProductService productService = new DomainProductService(productRepository, articleService);
     private static final Article TEST_ARTICLE = buildArticle("test_article", 2);
-    private static final Composition TEST_COMPOSITION = new Composition(TEST_ARTICLE, 1);
+    private static final Composition TEST_COMPOSITION = buildComposition(TEST_ARTICLE, 1);
     private static final Product TEST_PRODUCT = buildProduct("test_product", Collections.singletonList(TEST_COMPOSITION), 20);
-    private static final Composition TEST_COMPOSITION_NO_STOCK = new Composition(TEST_ARTICLE, 3);
+    private static final Composition TEST_COMPOSITION_NO_STOCK = buildComposition(TEST_ARTICLE, 3);
     private static final Product TEST_PRODUCT_NO_STOCK = buildProduct("test_product", Collections.singletonList(TEST_COMPOSITION_NO_STOCK), 20);
 
     private static Article buildArticle(String name, long stock) {
@@ -42,6 +42,14 @@ class DomainProductServiceTest {
         article.setName(name);
         return article;
     }
+
+    private static Composition buildComposition(Article article, int quantity) {
+        Composition composition = new Composition();
+        composition.setQuantity(quantity);
+        composition.setArticle(article);
+        return composition;
+    }
+
 
     private static Product buildProduct(String name, List<Composition> compositions, double price) {
         Product product = new Product();
@@ -62,10 +70,10 @@ class DomainProductServiceTest {
     @Test
     void sell() throws NoStockException, NotFoundException {
         when(productRepository.save(any())).then(returnsFirstArg());
-        when(articleRepository.save(any())).then(returnsFirstArg());
+        when(articleService.save(any())).then(returnsFirstArg());
         when(productRepository.findByUuid(eq(TEST_PRODUCT.getId()))).thenReturn(Optional.of(TEST_PRODUCT));
         Product product = productService.sell(TEST_PRODUCT.getId());
-        product.getComposition().stream().map(Composition::getArticle).forEach(article -> assertEquals(1, article.getStock()));
+        verify(articleService).reduceStock(any(Article.class), any(Integer.class));
     }
 
     @Test

@@ -5,10 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Dto to handle the {@link com.ikea.warehouse.domain.model.Article} on the application layer
+ *
+ * @author robertogomez
+ */
 @Data
 //Required for JMapper
 @NoArgsConstructor
-@AllArgsConstructor
 public class ArticleDto {
 
     @JMap

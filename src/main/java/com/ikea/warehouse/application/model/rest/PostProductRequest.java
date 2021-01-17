@@ -10,16 +10,19 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Dto to model the upload of products through the API
+ *
+ * @author robertogomez
+ */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class PostProductRequest {
 
     private List<ProductRequest> products;
 
     @Data
     @NoArgsConstructor
-    @AllArgsConstructor
     public static class ProductRequest {
 
         @Schema(description = "Name for the product")
@@ -35,7 +38,6 @@ public class PostProductRequest {
 
     @Data
     @NoArgsConstructor
-    @AllArgsConstructor
     public static class CompositionRequest {
 
         @JMap

@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -21,6 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -66,5 +68,19 @@ class ArticleControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    void storeWithFile() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/article/bulk")
+                .file(new MockMultipartFile("file", new ClassPathResource("inventory.json").getInputStream())))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    void storeIncorrectFile() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/article/bulk")
+                .file(new MockMultipartFile("file", new ClassPathResource("test_file.txt").getInputStream())))
+                .andExpect(status().isBadRequest());
     }
 }

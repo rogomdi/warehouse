@@ -7,6 +7,11 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Dto to handle the {@link com.ikea.warehouse.domain.model.Product} on the application layer
+ *
+ * @author robertogomez
+ */
 @Data
 //Required for JMapper
 @NoArgsConstructor

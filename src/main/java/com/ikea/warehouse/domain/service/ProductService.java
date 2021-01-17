@@ -7,6 +7,11 @@ import com.ikea.warehouse.domain.model.Product;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Interface that defines the API for the service to manage the products
+ *
+ * @author robertogomez
+ */
 public interface ProductService {
     List<Product> getAll(int page, int size);
     Product sell(UUID uuid) throws NoStockException, NotFoundException;
