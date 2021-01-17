@@ -109,7 +109,7 @@ Or you can run it with the images uploaded to dockerhub by the CD:
 
 Install the chart by running: `helm install ikea-coding-challenge app-1.0.0-local.tgz`
 
-Since we have not configured any Ingress controller, to access the APIs and Kafdrop you will need to expose the ports from services.
+Since we have not configured any Ingress controller, to access the API you will need to expose the ports.
 To do that we will need to run the following commands:
 <br>
 1. Exposing warehouse:
