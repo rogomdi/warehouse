@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  app:
+  - apiVersion: v1
+    created: "2021-01-17T19:35:05.083394583Z"
+    description: A generated Helm Chart for app from Skippbox Kompose
+    digest: 84ee8eb221d7e7cbba52d8d3aab47d78633c37e29edaae55ce4d76ea0e394fe3
+    keywords:
+    - app
+    name: app
+    urls:
+    - https://rogomdi.github.io/warehouse/app-0.0.1.tgz
+    version: 0.0.1
+generated: "2021-01-17T19:35:05.082931362Z"
