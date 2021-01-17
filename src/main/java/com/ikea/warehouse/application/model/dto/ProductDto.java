@@ -1,7 +1,6 @@
-package com.ikea.warehouse.application.model;
+package com.ikea.warehouse.application.model.dto;
 
 import com.googlecode.jmapper.annotations.JMap;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

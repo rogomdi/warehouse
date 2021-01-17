@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -33,14 +32,6 @@ class ArticleRepositoryIntegrationTest {
         article.setStock(stock);
         article.setName(name);
         return article;
-    }
-
-    private static Product buildProduct(String name, List<Composition> compositions, double price){
-        Product product = new Product();
-        product.setName(name);
-        product.setComposition(compositions);
-        product.setPrice(price);
-        return product;
     }
 
     @Test

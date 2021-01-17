@@ -3,18 +3,14 @@ package com.ikea.warehouse.application.service;
 import com.googlecode.jmapper.JMapper;
 import com.ikea.warehouse.application.exception.ApplicationError;
 import com.ikea.warehouse.application.exception.WarehouseException;
-import com.ikea.warehouse.application.model.ArticleDto;
-import com.ikea.warehouse.domain.exception.NoStockException;
+import com.ikea.warehouse.application.model.dto.ArticleDto;
 import com.ikea.warehouse.domain.exception.NotFoundException;
 import com.ikea.warehouse.domain.model.Article;
-import com.ikea.warehouse.domain.service.ArticleService;
 import com.ikea.warehouse.domain.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

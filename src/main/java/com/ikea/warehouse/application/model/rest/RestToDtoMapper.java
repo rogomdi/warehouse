@@ -1,5 +1,8 @@
-package com.ikea.warehouse.application.model;
+package com.ikea.warehouse.application.model.rest;
 
+import com.ikea.warehouse.application.model.dto.ArticleDto;
+import com.ikea.warehouse.application.model.dto.CompositionDto;
+import com.ikea.warehouse.application.model.dto.ProductDto;
 import com.ikea.warehouse.application.service.ApplicationArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

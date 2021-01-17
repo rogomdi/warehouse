@@ -1,4 +1,4 @@
-package com.ikea.warehouse.application.model;
+package com.ikea.warehouse.application.model.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.googlecode.jmapper.annotations.JMap;
@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import java.util.List;
 

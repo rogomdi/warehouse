@@ -44,9 +44,9 @@ public class DomainProductService implements ProductService {
         return composition.getArticle().getStock() >= quantity;
     }
 
-    private Article reduceStock(Article article, long stockSold) {
+    private void reduceStock(Article article, long stockSold) {
         article.setStock(article.getStock() - stockSold);
-        return articleRepository.save(article);
+        articleRepository.save(article);
     }
 
     @Transactional

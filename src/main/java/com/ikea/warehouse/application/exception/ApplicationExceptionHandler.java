@@ -1,6 +1,6 @@
 package com.ikea.warehouse.application.exception;
 
-import com.ikea.warehouse.application.model.ErrorResponse;
+import com.ikea.warehouse.application.model.rest.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

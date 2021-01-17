@@ -1,4 +1,4 @@
-package com.ikea.warehouse.application.model;
+package com.ikea.warehouse.application.model.rest;
 
 import lombok.Data;
 

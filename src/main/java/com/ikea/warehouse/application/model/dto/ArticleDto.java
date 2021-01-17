@@ -1,13 +1,9 @@
-package com.ikea.warehouse.application.model;
+package com.ikea.warehouse.application.model.dto;
 
 import com.googlecode.jmapper.annotations.JMap;
-import com.ikea.warehouse.infrastructure.model.ArticleEntity;
-import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 @Data
 //Required for JMapper

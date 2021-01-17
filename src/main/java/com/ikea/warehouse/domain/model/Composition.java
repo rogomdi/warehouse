@@ -1,11 +1,7 @@
 package com.ikea.warehouse.domain.model;
 
 import com.googlecode.jmapper.annotations.JMap;
-import com.ikea.warehouse.application.model.ArticleDto;
-import com.ikea.warehouse.infrastructure.model.CompositionEntity;
 import lombok.*;
-
-import java.util.List;
 
 @Data
 //Required for JMapper

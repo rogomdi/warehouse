@@ -2,27 +2,19 @@ package com.ikea.warehouse.application.service;
 
 import com.googlecode.jmapper.JMapper;
 import com.ikea.warehouse.application.exception.WarehouseException;
-import com.ikea.warehouse.application.model.ArticleDto;
-import com.ikea.warehouse.application.model.ProductDto;
-import com.ikea.warehouse.domain.exception.NoStockException;
+import com.ikea.warehouse.application.model.dto.ArticleDto;
 import com.ikea.warehouse.domain.exception.NotFoundException;
 import com.ikea.warehouse.domain.model.Article;
-import com.ikea.warehouse.domain.model.Composition;
-import com.ikea.warehouse.domain.model.Product;
 import com.ikea.warehouse.domain.service.ArticleService;
-import com.ikea.warehouse.domain.service.ProductService;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ApplicationArticleServiceTest {
     private final ArticleService articleService = mock(ArticleService.class);
@@ -35,14 +27,6 @@ class ApplicationArticleServiceTest {
         article.setStock(stock);
         article.setName(name);
         return article;
-    }
-
-    private static Product buildProduct(String name, List<Composition> compositions, double price){
-        Product product = new Product();
-        product.setName(name);
-        product.setComposition(compositions);
-        product.setPrice(price);
-        return product;
     }
 
     @Test
@@ -65,5 +49,6 @@ class ApplicationArticleServiceTest {
     void store() {
         when(articleService.save(any(Article.class))).then(returnsFirstArg());
         applicationArticleService.store(List.of(TEST_ARTICLE_DTO));
+        verify(articleService).save(any(Article.class));
     }
 }

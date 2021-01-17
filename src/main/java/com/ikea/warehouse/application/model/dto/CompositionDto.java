@@ -1,7 +1,6 @@
-package com.ikea.warehouse.application.model;
+package com.ikea.warehouse.application.model.dto;
 
 import com.googlecode.jmapper.annotations.JMap;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 @Data

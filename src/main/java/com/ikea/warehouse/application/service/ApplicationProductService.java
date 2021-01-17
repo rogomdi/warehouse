@@ -3,7 +3,7 @@ package com.ikea.warehouse.application.service;
 import com.googlecode.jmapper.JMapper;
 import com.ikea.warehouse.application.exception.ApplicationError;
 import com.ikea.warehouse.application.exception.WarehouseException;
-import com.ikea.warehouse.application.model.ProductDto;
+import com.ikea.warehouse.application.model.dto.ProductDto;
 import com.ikea.warehouse.domain.exception.NoStockException;
 import com.ikea.warehouse.domain.exception.NotFoundException;
 import com.ikea.warehouse.domain.model.Product;
@@ -39,8 +39,8 @@ public class ApplicationProductService {
         }
     }
 
-    public void store(List<ProductDto> productDtos) {
-        productDtos.forEach(productDto -> productService.save(productMapper.getDestination(productDto)));
+    public List<UUID> store(List<ProductDto> productDtos) {
+        return productDtos.stream().map(productDto -> productService.save(productMapper.getDestination(productDto))).map(Product::getId).collect(Collectors.toList());
     }
 
 }

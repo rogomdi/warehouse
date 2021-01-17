@@ -1,7 +1,7 @@
 package com.ikea.warehouse.application.service;
 
 import com.ikea.warehouse.application.exception.WarehouseException;
-import com.ikea.warehouse.application.model.ProductDto;
+import com.ikea.warehouse.application.model.dto.ProductDto;
 import com.ikea.warehouse.domain.exception.NoStockException;
 import com.ikea.warehouse.domain.exception.NotFoundException;
 import com.ikea.warehouse.domain.model.Article;
@@ -9,8 +9,6 @@ import com.ikea.warehouse.domain.model.Composition;
 import com.ikea.warehouse.domain.model.Product;
 import com.ikea.warehouse.domain.service.ProductService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,8 +17,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ApplicationProductServiceTest {
 
@@ -62,6 +59,7 @@ class ApplicationProductServiceTest {
     void sell() throws NoStockException, NotFoundException {
         when(productService.sell((TEST_PRODUCT.getId()))).thenReturn(TEST_PRODUCT_NO_STOCK);
         applicationProductService.sell(TEST_PRODUCT.getId());
+        verify(productService).sell(TEST_PRODUCT.getId());
     }
 
     @Test

@@ -12,11 +12,6 @@ public class WarehouseException extends RuntimeException{
      */
     private final int errorCode;
 
-    public WarehouseException(ApplicationError applicationError, String description) {
-        super(applicationError.getMessage());
-        this.errorCode = applicationError.getCode();
-    }
-
     public WarehouseException(ApplicationError applicationError, Throwable cause) {
         super(applicationError.getMessage(), cause);
         this.errorCode = applicationError.getCode();
