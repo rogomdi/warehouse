@@ -23,7 +23,7 @@ services:
 
   ######################## Mongo ##############################
   mongo:
-    image: mongo:4.0-xenial
+    image: mongo:4.4-bionic
     expose:
       - 27017
     ports:
